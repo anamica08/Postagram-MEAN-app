@@ -1,0 +1,33 @@
+<!-- {{postForm.value|json}} -->
+
+<mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>Create Post</mat-card-title>
+      <mat-card-subtitle>Fill the template to create new post.</mat-card-subtitle>
+    </mat-card-header>
+   
+    <mat-card-content>
+        <form class="example-form" autocomplete="off" [formGroup]="postForm">
+            <mat-form-field class="example-full-width">
+              <mat-label>Title</mat-label>
+              <input formControlName="title" matInput>
+              <mat-error>
+                <span *ngIf="postForm.controls.title.errors?.required">This field is mandatory.</span>
+            </mat-error>
+            </mat-form-field>
+          
+            <mat-form-field class="example-full-width">
+              <mat-label>Content</mat-label>
+              <textarea COLS="30" ROWS="5" WRAP="HARD" formControlName="content" matInput ></textarea>
+              <mat-error>
+                <span *ngIf="postForm.controls.content.errors?.required">This field is mandatory.</span>
+            </mat-error>
+            </mat-form-field>
+          </form>
+     
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary"  (click)="onFormSubmit()" >Add</button>
+     
+    </mat-card-actions>
+  </mat-card>
