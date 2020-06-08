@@ -16,7 +16,6 @@ export class PostCreateComponent implements OnInit {
   ngOnInit(): void {}
 
   postForm = this._formBuilder.group({
-    id:[''],
     title: ['', Validators.required],
     content: ['', Validators.required],
   });
