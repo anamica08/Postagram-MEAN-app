@@ -38,7 +38,7 @@ export class PostService {
   }
 
   addPosts(newPost) {
-    const new_post:Post = {id : null ,title: newPost.title , content: newPost.content}
+    const new_post:Post = {id : null ,title: newPost.title , content: newPost.content};
     this._httpClient
       .post<{ message: string, postId:string }>('http://localhost:3000/api/posts', new_post)
       .subscribe((data) => {
@@ -49,6 +49,23 @@ export class PostService {
       });
   }
 
+
+  updatePost(post_id:string,post){
+    const updatedpost:Post = {id : post_id ,title: post.title , content: post.content};
+    this._httpClient.put(`http://localhost:3000/api/posts/${post_id}`,updatedpost)
+    .subscribe((response)=>{
+      //locally update the posts array. 
+      const updatedPosts = [...this.posts];
+      const oldpostIndex = updatedPosts.findIndex(p => p.id === post.id);
+      updatedPosts[oldpostIndex] = post;
+      this.posts = updatedPosts;
+      this.postsUpdated.next([...this.posts]);
+    });
+
+  }
+
+
+
   deletePost(postId:string){
     this._httpClient.delete(`http://localhost:3000/api/posts/${postId}`)
     .subscribe(()=>{
@@ -56,5 +73,9 @@ export class PostService {
      this.posts = updatedPost;
      this.postsUpdated.next([...this.posts]);
     })
+  }
+
+  getPost(id:string){
+    return this._httpClient.get<{_id:string,title:string,content:string}>(`http://localhost:3000/api/posts/${id}`);
   }
 }

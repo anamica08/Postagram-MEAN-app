@@ -1,6 +1,6 @@
 <!-- {{postForm.value|json}} -->
-
-<mat-card class="example-card">
+{{dataLoaded}}
+<mat-card class="example-card" *ngIf="dataLoaded">
     <mat-card-header>
       <mat-card-title>Create Post</mat-card-title>
       <mat-card-subtitle>Fill the template to create new post.</mat-card-subtitle>
@@ -10,7 +10,7 @@
         <form class="example-form" autocomplete="off" [formGroup]="postForm">
             <mat-form-field class="example-full-width">
               <mat-label>Title</mat-label>
-              <input formControlName="title" matInput>
+              <input formControlName="title"  matInput>
               <mat-error>
                 <span *ngIf="postForm.controls.title.errors?.required">This field is mandatory.</span>
             </mat-error>
