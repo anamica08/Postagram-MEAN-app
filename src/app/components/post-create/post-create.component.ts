@@ -3,6 +3,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { PostService } from '../../services/post.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Post } from 'src/app/model/post';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-create',
@@ -10,16 +11,19 @@ import { Post } from 'src/app/model/post';
   styleUrls: ['./post-create.component.css'],
 })
 export class PostCreateComponent implements OnInit {
+  
   private mode = 'create';
   private postId: string = null;
   private post: Post;
   dataLoaded:boolean = false;
-postForm: FormGroup;
+  postForm:FormGroup;
+  
 
   constructor(
     private _formBuilder: FormBuilder,
     private _postService: PostService,
-    private _activeRoute: ActivatedRoute
+    private _activeRoute: ActivatedRoute,
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
@@ -28,37 +32,50 @@ postForm: FormGroup;
         //edit form
         this.mode = 'edit';
         this.postId = paramMap.get('id');
+        
         this._postService.getPost(this.postId).subscribe(postData=>{
+
         this.post = {
             id : postData._id,
             title: postData.title,
             content: postData.content
           };
-          console.log(this.post)
+         
           this.dataLoaded = true;
+          this.populateForm();
         });
-      } else {
+        } else {
+       
         this.mode = "create"
         this.post = { id: '', title: '', content: '' };
+        this.dataLoaded = true;
+        this.populateForm();
       }
+      
     });
 
-    
-  }
-  if(dataLoaded){
-  this.postForm = this._formBuilder.group({
-    title: [this.post?.title, Validators.required],
-    content: [this.post?.content, Validators.required],
-  });
+  
+  
 }
+
+populateForm(){
+this.postForm = this._formBuilder.group({
+  title: [this.post.title, Validators.required],
+  content: [this.post.content, Validators.required]
+});
+}
+
+  
 
   onFormSubmit() {
     if(this.mode === "edit"){
       if (this.postForm.valid) this._postService.updatePost(this.postId,this.postForm.value);
     }else{
       if (this.postForm.valid) this._postService.addPosts(this.postForm.value);
+      this.postForm.reset();
+    
     }
-    this.postForm.reset();
+
+    this._router.navigateByUrl('/');
   }
-  
 }

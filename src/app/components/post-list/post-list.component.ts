@@ -12,6 +12,8 @@ export class PostListComponent implements OnInit,OnDestroy
  {
   posts:Post[] = [];
   private _subscribe:Subscription;
+  isLoading:boolean = true;
+  noPostCreated:boolean ;
   constructor(
     private _postService :PostService
   ) { }
@@ -21,7 +23,14 @@ export class PostListComponent implements OnInit,OnDestroy
     this._postService.getPosts();
     this._subscribe = this._postService.getPostUpdateListener().subscribe((posts:Post[])=>
     {
+      this.isLoading = false;
       this.posts = posts;
+      if(this.posts.length == 0){
+        this.noPostCreated = true;
+      }else{
+        this.noPostCreated = false;
+      }
+      
     }
 
     )

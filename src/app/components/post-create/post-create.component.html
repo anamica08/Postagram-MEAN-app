@@ -1,5 +1,6 @@
 <!-- {{postForm.value|json}} -->
-{{dataLoaded}}
+<!-- {{dataLoaded}} -->
+<mat-spinner *ngIf="!dataLoaded"></mat-spinner>
 <mat-card class="example-card" *ngIf="dataLoaded">
     <mat-card-header>
       <mat-card-title>Create Post</mat-card-title>
@@ -27,7 +28,7 @@
      
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary"  (click)="onFormSubmit()" >Add</button>
-     
+      <button mat-raised-button color="primary"  (click)="onFormSubmit()" >Submit</button>
+     <a mat-raised-button color="primary" routerLink="/">Cancel</a>
     </mat-card-actions>
   </mat-card>
