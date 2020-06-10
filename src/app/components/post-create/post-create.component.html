@@ -16,7 +16,13 @@
                 <span *ngIf="postForm.controls.title.errors?.required">This field is mandatory.</span>
             </mat-error>
             </mat-form-field>
-          
+            <div>
+              <button type="button" mat-stroked-button (click)="filePicker.click()">Add Image</button>
+              <input type="file" #filePicker (change)="onImagePicked($event)">
+              <div class="image-preview"*ngIf="imagePreview != '' && imagePreview && postForm.get('image').valid">
+                <img [alt]="postForm.value.title" [src]="imagePreview">
+              </div> 
+            </div>
             <mat-form-field class="example-full-width">
               <mat-label>Content</mat-label>
               <textarea COLS="30" ROWS="5" WRAP="HARD" formControlName="content" matInput ></textarea>

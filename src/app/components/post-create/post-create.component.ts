@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, NG_ASYNC_VALIDATORS } from '@angular/forms';
 import { PostService } from '../../services/post.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Post } from 'src/app/model/post';
 import { Router } from '@angular/router';
+import { mimeType } from './mime-type.validator'
 
 @Component({
   selector: 'app-post-create',
@@ -15,8 +16,13 @@ export class PostCreateComponent implements OnInit {
   private mode = 'create';
   private postId: string = null;
   private post: Post;
+  imagePreview:string;
   dataLoaded:boolean = false;
-  postForm:FormGroup;
+  postForm:FormGroup = this._formBuilder.group({
+    title: [null, Validators.required],
+    image:[null,[Validators.required],[mimeType]],
+    content: [null, Validators.required]
+  });;
   
 
   constructor(
@@ -46,10 +52,8 @@ export class PostCreateComponent implements OnInit {
         });
         } else {
        
-        this.mode = "create"
-        this.post = { id: '', title: '', content: '' };
+        this.mode = "create";
         this.dataLoaded = true;
-        this.populateForm();
       }
       
     });
@@ -61,6 +65,7 @@ export class PostCreateComponent implements OnInit {
 populateForm(){
 this.postForm = this._formBuilder.group({
   title: [this.post.title, Validators.required],
+  image:[null,[Validators.required],[mimeType]],
   content: [this.post.content, Validators.required]
 });
 }
@@ -70,6 +75,7 @@ this.postForm = this._formBuilder.group({
   onFormSubmit() {
     if(this.mode === "edit"){
       if (this.postForm.valid) this._postService.updatePost(this.postId,this.postForm.value);
+      //console.log(this.postForm.value)
     }else{
       if (this.postForm.valid) this._postService.addPosts(this.postForm.value);
       this.postForm.reset();
@@ -77,5 +83,17 @@ this.postForm = this._formBuilder.group({
     }
 
     this._router.navigateByUrl('/');
+  }
+
+  onImagePicked(event:Event){
+    const file = (event.target as HTMLInputElement).files[0];
+    this.postForm.patchValue({image:file});
+    this.postForm.get('image').updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      this.imagePreview = reader.result as string;
+    }
+   reader.readAsDataURL(file);
+
   }
 }
