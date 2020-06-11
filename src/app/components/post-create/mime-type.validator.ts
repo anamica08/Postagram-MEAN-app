@@ -13,7 +13,7 @@ export const mimeType = (
 
 ): Promise<{ [key: string]: any }> | Observable<{ [key: string]: any }> => {
     
-  if (typeof control.value === 'string') {
+  if (typeof(control.value) === 'string') {
     return of(null);
   }
   //extract the file.
@@ -59,7 +59,7 @@ export const mimeType = (
             break;
         }
         //end of switch
-        console.log(isValid)
+     
         if(isValid){
             observer.next(null);
         }else{

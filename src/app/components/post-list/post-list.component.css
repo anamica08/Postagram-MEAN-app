@@ -5,16 +5,25 @@
     width: 500px;
     margin-left: 30px;
     margin-bottom: 1rem !important;
+    
 }
 .mat-form-field + .mat-form-field {
     margin-left: 8px;
   }
-
-  .panel-content{
-      /* overflow-x: scroll; */
-     
-  }
-
+mat-expansion-panel{
+    background-color: rgb(243, 243, 240);
+   
+}
   mat-spinner{
       margin: auto;
+  }
+
+  .post-image{
+      width: 100%;
+      margin-bottom: 20px;
+  }
+
+  .post-image img{
+      width: 100%;
+    box-shadow: 1px 1px 5px rgba(0,0,0,1);
   }

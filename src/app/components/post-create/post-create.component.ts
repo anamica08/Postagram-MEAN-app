@@ -44,7 +44,8 @@ export class PostCreateComponent implements OnInit {
         this.post = {
             id : postData._id,
             title: postData.title,
-            content: postData.content
+            content: postData.content,
+            imagePath: postData.imagePath
           };
          
           this.dataLoaded = true;
@@ -63,11 +64,13 @@ export class PostCreateComponent implements OnInit {
 }
 
 populateForm(){
+  console.log("populating......")
 this.postForm = this._formBuilder.group({
   title: [this.post.title, Validators.required],
-  image:[null,[Validators.required],[mimeType]],
+  image:[this.post.imagePath,[Validators.required],[mimeType]],
   content: [this.post.content, Validators.required]
 });
+
 }
 
   
@@ -75,9 +78,10 @@ this.postForm = this._formBuilder.group({
   onFormSubmit() {
     if(this.mode === "edit"){
       if (this.postForm.valid) this._postService.updatePost(this.postId,this.postForm.value);
-      //console.log(this.postForm.value)
+      
     }else{
       if (this.postForm.valid) this._postService.addPosts(this.postForm.value);
+      
       this.postForm.reset();
     
     }
