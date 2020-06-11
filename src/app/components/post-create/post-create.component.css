@@ -1,3 +1,8 @@
+*{
+  text-transform: capitalize;
+}
+
+
 .example-card {
    margin-left: 30px;
     margin-top: 2rem !important;

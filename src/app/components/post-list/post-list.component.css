@@ -1,10 +1,12 @@
-
+*{
+  text-transform: capitalize;
+}
 :host{
     display: block;
-    margin-top: 1rem !important;
     width: 500px;
-    margin-left: 30px;
-    margin-bottom: 1rem !important;
+    margin-left: 40px;
+    margin-top: 1rem;
+   
     
 }
 .mat-form-field + .mat-form-field {
@@ -12,8 +14,13 @@
   }
 mat-expansion-panel{
     background-color: rgb(243, 243, 240);
+    margin-bottom: 1rem !important; 
    
 }
+mat-paginator{
+  margin-top: 1rem;
+}
+
   mat-spinner{
       margin: auto;
   }
@@ -27,3 +34,5 @@ mat-expansion-panel{
       width: 100%;
     box-shadow: 1px 1px 5px rgba(0,0,0,1);
   }
+
+  
