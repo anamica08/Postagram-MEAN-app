@@ -61,11 +61,10 @@ export class PostService {
   }
 
   updatePost(post_id: string, postForm) {
-
-    let postData:Post | FormData;
-    if (typeof(postForm.image) == 'object') {
-       postData = new FormData();
-       postData.append('id',post_id);
+    let postData: Post | FormData;
+    if (typeof postForm.image == 'object') {
+      postData = new FormData();
+      postData.append('id', post_id);
       postData.append('title', postForm.title);
       postData.append('content', postForm.content);
       postData.append('image', postForm.image, postForm.title);
@@ -78,17 +77,20 @@ export class PostService {
       };
     }
     this._httpClient
-      .put<{message:string,post:Post}>(`http://localhost:3000/api/posts/${post_id}`, postData)
+      .put<{ message: string; post: Post }>(
+        `http://localhost:3000/api/posts/${post_id}`,
+        postData
+      )
       .subscribe((response) => {
         //locally update the posts array.
         const updatedPosts = [...this.posts];
         const oldpostIndex = updatedPosts.findIndex((p) => p.id === post_id);
         const post = {
           id: post_id,
-        title: postForm.title,
-        content: postForm.content,
-        imagePath: response.post.imagePath
-        }
+          title: postForm.title,
+          content: postForm.content,
+          imagePath: response.post.imagePath,
+        };
         updatedPosts[oldpostIndex] = post;
         this.posts = updatedPosts;
         this.postsUpdated.next([...this.posts]);
