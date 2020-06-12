@@ -14,6 +14,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PostCreateComponent } from './components/post-create/post-create.component';
 import { PostListComponent } from './components/post-list/post-list.component';
 import { HeaderComponent } from './header/header.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { SignUpComponent } from './components/auth/sign-up/sign-up.component';
 
 
 @NgModule({
@@ -23,6 +25,8 @@ import { HeaderComponent } from './header/header.component';
     PostCreateComponent,
     PostListComponent,
     HeaderComponent,
+    LoginComponent,
+    SignUpComponent,
     
   ],
   imports: [
