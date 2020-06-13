@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import {FormsModule} from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http'
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 
 
 
@@ -16,6 +16,7 @@ import { PostListComponent } from './components/post-list/post-list.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { SignUpComponent } from './components/auth/sign-up/sign-up.component';
+import { AuthInterceptor } from './components/auth/auth-interceptor';
 
 
 @NgModule({
@@ -38,7 +39,7 @@ import { SignUpComponent } from './components/auth/sign-up/sign-up.component';
     BrowserAnimationsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS,useClass: AuthInterceptor,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

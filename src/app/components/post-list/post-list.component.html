@@ -12,9 +12,9 @@
     <div class="panel-content">
         <p>{{ post.content }}</p>
     </div>
-    <mat-action-row>
-        <button mat-button color="warn" (click)="onDelete(post.id)" >Delete</button>
-        <a mat-button [routerLink]="['/edit',post.id]" color="primary" >Edit</a>
+    <mat-action-row >
+        <button *ngIf="isAuthenticated" mat-button color="warn" (click)="onDelete(post.id)" >Delete</button>
+        <a mat-button *ngIf="isAuthenticated" [routerLink]="['/edit',post.id]" color="primary" >Edit</a>
       </mat-action-row>
 
     </mat-expansion-panel>

@@ -2,17 +2,34 @@ import { Injectable } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AuthData } from '../components/auth/auth-data';
+import { Subject } from 'rxjs';
+import { retryWhen } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private token;
+  private isAuthenticated:boolean = false;
+  private authStatusListener=new Subject<boolean>();
+
   constructor(private _httpClient: HttpClient) {}
 
   getToken() {
     return this.token;
   }
+
+
+  checkIfUserAuthenticated(){
+    return this.isAuthenticated;
+  }
+
+
+  getAuthStatusListener(){
+    return this.authStatusListener.asObservable();
+  }
+
+
   createUSer(form: NgForm) {
     const authData: AuthData = {
       email: form.value.email,
@@ -24,6 +41,7 @@ export class AuthService {
         console.log(response);
       });
   }
+
 
   authenticateUser(form: NgForm) {
     const authData: AuthData = {
@@ -37,6 +55,19 @@ export class AuthService {
       )
       .subscribe((response) => {
         this.token = response.token;
+        if(response){
+          this.isAuthenticated  = true;
+          this.authStatusListener.next(true);
+        }
+       
       });
+      
+      
+  }
+
+  logout(){
+    this.token = null;
+    this.isAuthenticated=false;
+    this.authStatusListener.next(false);
   }
 }
