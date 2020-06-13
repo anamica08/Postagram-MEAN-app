@@ -22,7 +22,7 @@ export class SignUpComponent implements OnInit {
   onSubmit(form:NgForm){
     if(form.invalid)
     return;
-
+    this.isLoading = true;
     this._authService.createUSer(form);
     
 

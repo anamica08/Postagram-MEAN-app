@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
     if(form.invalid){
       return false;
     }
+    this.isLoading = true;
     this._authService.authenticateUser(form);
     
     this._router.navigateByUrl('/create');

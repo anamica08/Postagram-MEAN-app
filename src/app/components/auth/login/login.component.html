@@ -1,6 +1,6 @@
-<mat-spinner *ngIf="isLoading"></mat-spinner>
 
-<mat-card class="example-card" *ngIf="!isLoading" >
+
+<mat-card class="example-card" >
     <mat-card-header>
       <mat-card-title>Login to Create Post</mat-card-title>
       
@@ -29,7 +29,8 @@
      
     </mat-card-content>
     <mat-card-actions>
-      <button (click)="onLogin(loginForm)" mat-raised-button color="primary" >Login</button>
-     <a routerLink="/signup"mat-raised-button color="primary">New User? </a>
+      <button *ngIf="!isLoading" (click)="onLogin(loginForm)" mat-raised-button color="primary" >Login</button>
+     <a *ngIf="!isLoading" routerLink="/signup"mat-raised-button color="primary">New User? </a>
+     <mat-spinner *ngIf="isLoading"></mat-spinner>
     </mat-card-actions>
   </mat-card>

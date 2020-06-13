@@ -1,4 +1,4 @@
-<mat-spinner *ngIf="isLoading"></mat-spinner>
+
 
 <mat-card class="example-card" *ngIf="!isLoading" >
     <mat-card-header>
@@ -28,7 +28,8 @@
      
     </mat-card-content>
     <mat-card-actions>
-      <button type="submit" (click)="onSubmit(signupForm)" mat-raised-button color="primary" >Submit</button>
+      <button *ngIf="!isLoading" type="submit" (click)="onSubmit(signupForm)" mat-raised-button color="primary" >Submit</button>
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
      <!-- <a mat-raised-button color="primary">Forgot Password ? </a> -->
     </mat-card-actions>
   </mat-card>
