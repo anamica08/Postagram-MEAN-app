@@ -55,7 +55,8 @@ router.post('/login', (req, res, next) => {
             //lets create a token , if user exists and it authenticated
             const token = jwt.sign({ email: authorizedUser.email, userId: authorizedUser._id }, "post_application_created_to_learn_mean-stack_development", { expiresIn: '1h' });
             res.status(200).json({
-                token: token
+                token: token,
+                expirationTime:3600
             })
         })
         .catch(err => {

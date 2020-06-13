@@ -24,8 +24,7 @@ export class LoginComponent implements OnInit {
     }
     this.isLoading = true;
     this._authService.authenticateUser(form);
-    
-    this._router.navigateByUrl('/create');
+    this._router.navigateByUrl('/');
     
   }
 
