@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 //this returns us an express app and wnow we can use it .
 const app = express();
 const postRoutes = require('./routes/posts');
-
+const userRoutes = require('./routes/users');
 mongoose.connect("mongodb+srv://anamika:1s1N23MiycqxJwDT@cluster0-tvojz.mongodb.net/mean-stack-app?retryWrites=true&w=majority")
 .then(()=>{
     console.log("Connected to Db!")
@@ -32,5 +32,5 @@ app.use((req, res, next) => {
 //1s1N23MiycqxJwDT
 
 app.use("/api/posts",postRoutes);
-
+app.use("/api/users",userRoutes);
 module.exports = app;
