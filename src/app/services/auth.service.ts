@@ -29,6 +29,33 @@ export class AuthService {
   getAuthStatusListener(){
     return this.authStatusListener.asObservable();
   }
+  private saveAuthData(token:string,expirationDate:Date){
+    localStorage.setItem('token',token);
+    localStorage.setItem('expireDuration',expirationDate.toISOString());
+  }
+  private clearAuthData(){
+    localStorage.removeItem('token');
+    localStorage.removeItem('expireDuration');
+  }
+
+  private getAuthData(){
+    const token = localStorage.getItem('token');
+    const expiration = localStorage.getItem('expireDuration');
+    if(!token || !expiration){
+      return;
+    }
+    return {
+      token: token,
+      expirationTime: new Date(expiration)
+    }
+  }
+private setAuthTimer(duration:number){
+  console.log("setting timer",duration)
+  this.tokenTimer=setTimeout(() => {
+    this.logout;
+  }, duration * 1000 );
+}
+
 
 
   createUSer(form: NgForm) {
@@ -58,11 +85,12 @@ export class AuthService {
         this.token = response.token;
         if(response){
           const expiresIn = response.expirationTime;
-          this.tokenTimer=setTimeout(() => {
-            this.logout;
-          }, expiresIn );
+          this.setAuthTimer(expiresIn);
           this.isAuthenticated  = true;
           this.authStatusListener.next(true);
+          const now = new Date();
+          const expirationDate =new Date( now.getTime() + expiresIn*1000 );
+          this.saveAuthData(this.token,expirationDate);
         }
        
       });
@@ -70,11 +98,27 @@ export class AuthService {
       //this._router.navigateByUrl('/');
   }
 
+  autoAuthUser(){
+    const authInfo = this.getAuthData();
+    if(authInfo == null){
+      return;
+    }
+    const now = new Date();
+    const expiresIn = authInfo.expirationTime.getTime() - now.getTime();
+    if(expiresIn > 0){
+      this.token = authInfo.token,
+      this.isAuthenticated = true;
+      this.setAuthTimer(expiresIn / 1000);
+      this.authStatusListener.next(true);
+    }
+  }
+//to kick off the automatic authentication , call this function in app component, because that is loaded first
   logout(){
     this.token = null;
     this.isAuthenticated=false;
     this.authStatusListener.next(false);
     this._router.navigateByUrl('/');
+    this.clearAuthData();
     clearTimeout(this.tokenTimer);
   }
 }
