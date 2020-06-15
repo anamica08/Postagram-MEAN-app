@@ -64,7 +64,7 @@ export class PostService {
         // };
         // this.posts.push(new_post);
         // this.postsUpdated.next([...this.posts]);
-      });
+      },err=>{});
   }
 
   updatePost(post_id: string, postForm) {
@@ -103,7 +103,7 @@ export class PostService {
         // updatedPosts[oldpostIndex] = post;
         // this.posts = updatedPosts;
         // this.postsUpdated.next([...this.posts]);
-      });
+      },err=>{});
   }
 
   deletePost(postId: string) {
