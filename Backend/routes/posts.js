@@ -48,7 +48,8 @@ router.post("", checkAuth, multer({ storage: storage }).single('image'), (req, r
         creator: req.userData.userId
     });
 
-    post.save().then((createdPost) => {
+    post.save()
+    .then((createdPost) => {
         res.status(201).json({
             message: 'added succesfully',
             post: {
@@ -61,6 +62,11 @@ router.post("", checkAuth, multer({ storage: storage }).single('image'), (req, r
                 creator: createdPost.creator
             }
         });
+    })
+    .catch(err=>{
+        res.status(417).json({
+            message: "Post not Added!! Some error occured!!"
+        })
     })
 });
 
@@ -85,6 +91,11 @@ router.get('', (req, res) => {
                 posts: fetchedPosts,
                 maxPosts: count
             })
+        })
+        .catch(err=>{
+            res.status(404).json({
+                message: "Some error occured during fetching Data!!"
+            })
         });
 
 
@@ -107,7 +118,8 @@ router.put("/:id", checkAuth, multer({ storage: storage }).single('image'), (req
         creator: req.userData.userId
     });
     //creator is added to prevent , the user who doesnot belong to post to do changes.
-    Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post).then(result => {
+    Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
+    .then(result => {
         if (result.nModified === 0) {
             return res.status(401).json({
                 message: "User not authorized",
@@ -118,11 +130,17 @@ router.put("/:id", checkAuth, multer({ storage: storage }).single('image'), (req
             message: "updated succesfully",
             post: post
         })
+    })
+    .catch(err=>{
+        res.status(417).json({
+            message: "Post Edit Failed!!"
+        })
     });
 })
 
 router.get("/:id", (req, res) => {
-    Post.findById(req.params.id).then(post => {
+    Post.findById(req.params.id)
+    .then(post => {
         console.log("from db", post);
         if (post) {
             res.status(200).json(post);
@@ -132,6 +150,11 @@ router.get("/:id", (req, res) => {
             })
         }
     })
+    .catch(err=>{
+        res.status(404).json({
+            message: "Some error occured during fetching Data!!"
+        })
+    });
 })
 
 router.delete("/:id", checkAuth, (req, res) => {
@@ -150,8 +173,10 @@ router.delete("/:id", checkAuth, (req, res) => {
                 });
             }
         })
-        .catch(() => {
-            console.log("error")
+        .catch(err => {
+            res.status(500).json({
+                message: "Delete Failed!!"
+            })
         });
 
 

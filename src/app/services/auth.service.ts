@@ -100,6 +100,9 @@ private setAuthTimer(duration:number){
           this.saveAuthData(this.token,expirationDate,this.loggedInUser);
         }
        
+      },err=>{
+        this.isAuthenticated= false;
+        this.loggedInUser = null;
       });
       
       //this._router.navigateByUrl('/');

@@ -25,7 +25,6 @@ router.post("/signup", (req, res, next) => {
                 .catch(err => {
                     res.status(417).json({
                         message: "Already Registered!!",
-                        error: err
                     });
                 });
         });
@@ -49,7 +48,7 @@ router.post('/login', (req, res, next) => {
         .then(result => {
             if (!result) {
                 return res.status(401).json({
-                    message: 'Authentication Failed!!'
+                    message: 'Invalid Login Credentials!!'
                 })
             }
             //lets create a token , if user exists and it authenticated

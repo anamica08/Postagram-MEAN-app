@@ -1,14 +1,27 @@
 *{
   text-transform: capitalize;
+  
   /* color: white; */
 }
 :host{
     display: block;
-    width: 500px;
-    margin-left: 40px;
-    margin-top: 1rem;
+    width: 50%;
+    /* margin-left: 40px;*/
+    margin-top: 1rem !important; 
+    margin: 0 auto;
+   
    
     
+}
+
+
+.post-content{
+  font-family: monospace;
+  font-size: 16px;
+}
+.post-title{
+  font-size: 18px;
+  font-family: monospace;
 }
 .mat-form-field + .mat-form-field {
     margin-left: 8px;

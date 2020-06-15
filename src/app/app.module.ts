@@ -17,6 +17,8 @@ import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { SignUpComponent } from './components/auth/sign-up/sign-up.component';
 import { AuthInterceptor } from './components/auth/auth-interceptor';
+import { ErrorComponent } from './components/error/error.component';
+import { ErrorInterceptor } from './error-interceptor';
 
 
 @NgModule({
@@ -28,6 +30,7 @@ import { AuthInterceptor } from './components/auth/auth-interceptor';
     HeaderComponent,
     LoginComponent,
     SignUpComponent,
+    ErrorComponent,
     
   ],
   imports: [
@@ -39,7 +42,9 @@ import { AuthInterceptor } from './components/auth/auth-interceptor';
     BrowserAnimationsModule,
     HttpClientModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS,useClass: AuthInterceptor,multi:true}],
-  bootstrap: [AppComponent]
+  providers: [{provide: HTTP_INTERCEPTORS,useClass: AuthInterceptor,multi:true},
+    {provide: HTTP_INTERCEPTORS,useClass: ErrorInterceptor,multi:true}],
+  bootstrap: [AppComponent],
+  entryComponents:[ErrorComponent]
 })
 export class AppModule { }

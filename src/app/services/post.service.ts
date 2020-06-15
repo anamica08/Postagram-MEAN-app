@@ -33,6 +33,9 @@ export class PostService {
       .subscribe((transaformedData) => {
         this.posts = transaformedData._post;
         this.postsUpdated.next({posts: [...this.posts],postCount: transaformedData.maxPosts});
+      },err=>{
+        this.posts = [];
+        this.postsUpdated.next({posts: [...this.posts],postCount: null});
       });
   }
 
