@@ -23,11 +23,12 @@ export class SignUpComponent implements OnInit {
     if(form.invalid)
     return;
     this.isLoading = true;
-    this._authService.createUSer(form);
-    
-
-    alert("You are Succesfully Registered. Please Login with the credentials.");
-    this._router.navigateByUrl('/login');
+    this._authService.createUSer(form)
+    .subscribe(null,error=>{
+      this.isLoading = false;
+      this._router.navigateByUrl('/login');
+    })
+   
   }
 
 }

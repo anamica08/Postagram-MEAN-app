@@ -24,6 +24,7 @@ export class PostService {
               content: post.content,
               id: post._id,
               imagePath: post.imagePath,
+              creator: post.creator
             };
           }),
         maxPosts: data.maxPosts};
@@ -77,6 +78,7 @@ export class PostService {
         title: postForm.title,
         content: postForm.content,
         imagePath: postForm.image,
+        creator:null
       };
     }
     this._httpClient
@@ -117,6 +119,7 @@ export class PostService {
       title: string;
       content: string;
       imagePath: string;
+      creator:string
     }>(`http://localhost:3000/api/posts/${id}`);
   }
 }

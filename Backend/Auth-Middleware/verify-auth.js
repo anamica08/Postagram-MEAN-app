@@ -7,7 +7,12 @@ module.exports = (req, res, next) => {
     //can ommit bearer in other apps.
     try {
         const token = req.headers.authorization.split(' ')[1];
-        jwt.verify(token, "post_application_created_to_learn_mean-stack_development");
+        const decodedToken = jwt.verify(token, "post_application_created_to_learn_mean-stack_development");
+        
+        //here to get the token and make it avaible to all the further procedure, we added a field to 
+        //the request object, whichever route using this middleware , will receive this userData, as request
+        //is transferred to next() middleware.
+        req.userData = {email: decodedToken.email , userId: decodedToken.userId};
         next();
     } catch (error) {
         res.status(401).json({

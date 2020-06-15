@@ -11,10 +11,11 @@
     </div>
     <div class="panel-content">
         <p>{{ post.content }}</p>
+        <p>{{post.creator}}  , {{loggedInUser}}</p>
     </div>
     <mat-action-row >
-        <button *ngIf="isAuthenticated" mat-button color="warn" (click)="onDelete(post.id)" >Delete</button>
-        <a mat-button *ngIf="isAuthenticated" [routerLink]="['/edit',post.id]" color="primary" >Edit</a>
+        <button *ngIf="isAuthenticated && loggedInUser === post.creator" mat-button color="warn" (click)="onDelete(post.id)" >Delete</button>
+        <a mat-button *ngIf="isAuthenticated && loggedInUser === post.creator" [routerLink]="['/edit',post.id]" color="primary" >Edit</a>
       </mat-action-row>
 
     </mat-expansion-panel>

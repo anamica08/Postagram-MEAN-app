@@ -3,7 +3,8 @@ const multer = require('multer');
 const router = express.Router();
 const Post = require('../models/post');
 
-const checkAuth = require('../Auth-Middleware/verify-auth')
+const checkAuth = require('../Auth-Middleware/verify-auth');
+const { create } = require('../models/post');
 
 //multer configurations
 const MIME_TYPE_MAP = {
@@ -36,14 +37,15 @@ const storage = multer.diskStorage({
 
 
 //express automatically executes the checkAuth on each request.
-router.post("",checkAuth, multer({ storage: storage }).single('image'), (req, res, next) => {
+router.post("", checkAuth, multer({ storage: storage }).single('image'), (req, res, next) => {
     //construct a url to server.
     const url = req.protocol + "://" + req.get('host');
 
     const post = new Post({
         title: req.body.title,
         content: req.body.content,
-        imagePath: url + "/images/" + req.file.filename
+        imagePath: url + "/images/" + req.file.filename,
+        creator: req.userData.userId
     });
 
     post.save().then((createdPost) => {
@@ -55,7 +57,8 @@ router.post("",checkAuth, multer({ storage: storage }).single('image'), (req, re
                 //or ca use 
                 title: createdPost.title,
                 content: createdPost.content,
-                imagePath: createdPost.imagePath
+                imagePath: createdPost.imagePath,
+                creator: createdPost.creator
             }
         });
     })
@@ -72,23 +75,24 @@ router.get('', (req, res) => {
         _query.skip(pageSize * (currPage - 1)).limit(pageSize);
     }
     _query
-    .then(documents => {
-        fetchedPosts = documents;
-        return Post.countDocuments();
-    })
-    .then(count=>{
-        res.status(200).json({
-            message:"Posts Fetched Succesfully",
-            posts:fetchedPosts,
-            maxPosts: count
+        .then(documents => {
+            fetchedPosts = documents;
+            return Post.countDocuments();
         })
-    });
-    //res.send('hello from ok express');
+        .then(count => {
+            res.status(200).json({
+                message: "Posts Fetched Succesfully",
+                posts: fetchedPosts,
+                maxPosts: count
+            })
+        });
+
 
 });
 
-router.put("/:id",checkAuth,multer({ storage: storage }).single('image'), (req, res) => {
+router.put("/:id", checkAuth, multer({ storage: storage }).single('image'), (req, res) => {
     let imagePath;
+
     if (req.file) {
         const url = req.protocol + "://" + req.get('host');
         imagePath = url + "/images/" + req.file.filename
@@ -99,10 +103,17 @@ router.put("/:id",checkAuth,multer({ storage: storage }).single('image'), (req, 
         _id: req.body.id,
         title: req.body.title,
         content: req.body.content,
-        imagePath: imagePath
+        imagePath: imagePath,
+        creator: req.userData.userId
     });
-
-    Post.updateOne({ _id: req.params.id }, post).then(result => {
+    //creator is added to prevent , the user who doesnot belong to post to do changes.
+    Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post).then(result => {
+        if (result.nModified === 0) {
+            return res.status(401).json({
+                message: "User not authorized",
+                post: null
+            })
+        }
         res.status(200).json({
             message: "updated succesfully",
             post: post
@@ -123,12 +134,21 @@ router.get("/:id", (req, res) => {
     })
 })
 
-router.delete("/:id",checkAuth ,(req, res) => {
-    Post.deleteOne({ _id: req.params.id })
+router.delete("/:id", checkAuth, (req, res) => {
+    //console.log(req.userData.userId)
+    Post.deleteOne({ _id: req.params.id, creator: req.userData.userId })
         .then(result => {
-            res.status(200).json({
-                message: "Deleted Succesfully"
-            });
+            
+            if (result.n === 0) {
+                return res.status(401).json({
+                    message: "User not authorized",
+
+                })
+            } else {
+                res.status(200).json({
+                    message: "Deleted Succesfully"
+                });
+            }
         })
         .catch(() => {
             console.log("error")

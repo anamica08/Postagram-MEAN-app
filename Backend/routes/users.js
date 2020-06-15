@@ -19,12 +19,12 @@ router.post("/signup", (req, res, next) => {
                 .then(result => {
                     res.status(201).json({
                         message: "Succefully Registered",
-                        addedUser: result
+                        addedUser: result.email
                     });
                 })
                 .catch(err => {
                     res.status(417).json({
-                        message: "Alredy Registered!!",
+                        message: "Already Registered!!",
                         error: err
                     });
                 });
@@ -56,7 +56,8 @@ router.post('/login', (req, res, next) => {
             const token = jwt.sign({ email: authorizedUser.email, userId: authorizedUser._id }, "post_application_created_to_learn_mean-stack_development", { expiresIn: '1h' });
             res.status(200).json({
                 token: token,
-                expirationTime:3600
+                expirationTime:3600,
+                user_id: authorizedUser._id
             })
         })
         .catch(err => {

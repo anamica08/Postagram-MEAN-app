@@ -13,6 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class PostListComponent implements OnInit,OnDestroy
  {
   //page related settings
+  loggedInUser:string;
   length:number = 0;
   pageSize:number = 2;
   pageSizeOptions:number[] = [1,2,5,10];
@@ -35,12 +36,15 @@ export class PostListComponent implements OnInit,OnDestroy
   
 
   ngOnInit(): void {
+    this.loggedInUser = this._authService.getCurrentUser();
     this._postService.getPosts(this.pageSize,this.currPage);
     this._subscribe = this._postService.getPostUpdateListener().subscribe((retreivedPostData: {posts:Post[],postCount:number})=>
     {
+      //console.log(retreivedPostData)
       this.isLoading = false;
       this.length = retreivedPostData.postCount;
-      this.posts = retreivedPostData.posts;
+      this.posts = retreivedPostData.posts;//not immediately updating
+      console.log();
 
       if(this.posts.length == 0){
         this.noPostCreated = true;
@@ -52,6 +56,7 @@ export class PostListComponent implements OnInit,OnDestroy
     this.isAuthenticated = this._authService.checkIfUserAuthenticated();
     this.authStatusSubs = this._authService.getAuthStatusListener().subscribe(isAuthenticated=>{
       this.isAuthenticated = isAuthenticated;
+      this.loggedInUser = this._authService.getCurrentUser();
     })
   }
   onDelete(id:string){
