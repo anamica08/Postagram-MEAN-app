@@ -1,0 +1,6 @@
+{
+    "env":{
+        "MONGO_ATLAS_PASSWORD":"1s1N23MiycqxJwDT",
+        "JWT_KEY": "post_application_created_to_learn_mean-stack_development"
+    }
+}

@@ -26,10 +26,10 @@ export class SignUpComponent implements OnInit {
     this._authService.createUSer(form)
     .subscribe(result=>{
       this.isLoading = false;
-      this._router.navigateByUrl('/login');
+      this._router.navigateByUrl('/auth/login');
     },error=>{
       this.isLoading = false;
-      this._router.navigateByUrl('/login');
+      this._router.navigateByUrl('/auth/login');
     })
    
   }

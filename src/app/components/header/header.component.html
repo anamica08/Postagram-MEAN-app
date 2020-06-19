@@ -8,8 +8,8 @@
     </div> 
     <div>
 
-        <span  *ngIf="!userAuthenticated"><a mat-button routerLink="/login" routerLinkActive="mat-accent" class="nav-link"  >Login</a></span>
-        <span  *ngIf="!userAuthenticated"><a mat-button routerLink="/signup" routerLinkActive="mat-accent" class="nav-link"  >Signup</a></span>
+        <span  *ngIf="!userAuthenticated"><a mat-button routerLink="/auth/login" routerLinkActive="mat-accent" class="nav-link"  >Login</a></span>
+        <span  *ngIf="!userAuthenticated"><a mat-button routerLink="/auth/signup" routerLinkActive="mat-accent" class="nav-link"  >Signup</a></span>
         <span *ngIf="userAuthenticated"><a mat-button routerLink="/create" routerLinkActive="mat-accent" class="nav-link"  >Create Post</a></span>
         <span *ngIf="userAuthenticated"><a mat-button (click)="onLogout()" class="nav-link"  >Logout  </a></span>
  

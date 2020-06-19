@@ -6,6 +6,10 @@ import { Subject } from 'rxjs';
 import { retryWhen } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
+import {environment} from '../../environments/environment'
+
+const Backend_url = environment.apiURL+'/users/';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -71,7 +75,7 @@ private setAuthTimer(duration:number){
       password: form.value.password,
     };
     return this._httpClient
-      .post('http://localhost:3000/api/users/signup', authData);
+      .post(Backend_url+'/signup', authData);
       
   }
 
@@ -83,7 +87,7 @@ private setAuthTimer(duration:number){
     };
     this._httpClient
       .post<{ token: string,expirationTime:number,user_id:string}>(
-        'http://localhost:3000/api/users/login',
+        Backend_url+'/login',
         authData
       )
       .subscribe((response) => {

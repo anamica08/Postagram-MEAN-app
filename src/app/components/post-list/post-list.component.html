@@ -14,6 +14,8 @@
         <!-- <p>{{post.creator}}  , {{loggedInUser}}</p> -->
     </div>
     <mat-action-row >
+        <button *ngIf="loggedInUser !== post.creator"mat-button>LIKE</button>
+    <button mat-button *ngIf="loggedInUser !== post.creator">SHARE</button>
         <button *ngIf="isAuthenticated && loggedInUser === post.creator" mat-button color="warn" (click)="onDelete(post.id)" >Delete</button>
         <a mat-button *ngIf="isAuthenticated && loggedInUser === post.creator" [routerLink]="['/edit',post.id]" color="primary" >Edit</a>
       </mat-action-row>
@@ -23,7 +25,7 @@
 </mat-accordion>
 <mat-paginator [length]="length"
               [pageSize]="pageSize"
-              [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf= "posts.length > 0">
+              [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf= "posts.length >= 0">
 </mat-paginator>
-<span *ngIf="noPostCreated">No Post added yet!</span>
+<span *ngIf="noPostCreated">This Page has no posts to display!!</span>
 <mat-spinner *ngIf="isLoading"></mat-spinner>

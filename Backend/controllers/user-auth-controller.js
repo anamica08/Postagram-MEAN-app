@@ -28,7 +28,7 @@ exports.checkLogin =  (req, res, next) => {
                 })
             }
             //lets create a token , if user exists and it authenticated
-            const token = jwt.sign({ email: authorizedUser.email, userId: authorizedUser._id }, "post_application_created_to_learn_mean-stack_development", { expiresIn: '1h' });
+            const token = jwt.sign({ email: authorizedUser.email, userId: authorizedUser._id }, process.env.JWT_KEY, { expiresIn: '1h' });
             res.status(200).json({
                 token: token,
                 expirationTime:3600,

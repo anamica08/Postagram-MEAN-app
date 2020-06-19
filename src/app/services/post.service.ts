@@ -3,7 +3,9 @@ import { Subject } from 'rxjs';
 import { Post } from '../model/post';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import {environment} from '../../environments/environment'
 
+const Backend_url = environment.apiURL+'/posts/';
 @Injectable({
   providedIn: 'root',
 })
@@ -15,7 +17,7 @@ export class PostService {
   getPosts(postPerPage:number , currPageNum:number) {
     const querParams = `?size=${postPerPage}&page=${currPageNum}`;
     this._httpClient
-      .get<{ message: string, posts: any, maxPosts:number }>('http://localhost:3000/api/posts' + querParams)
+      .get<{ message: string, posts: any, maxPosts:number }>( Backend_url + querParams)
       .pipe(
         map((data) => {
           return {_post: data.posts.map((post) => {
@@ -51,7 +53,7 @@ export class PostService {
 
     this._httpClient
       .post<{ message: string; post: Post }>(
-        'http://localhost:3000/api/posts',
+        Backend_url,
         postData
       )
       .subscribe((data) => {
@@ -86,7 +88,7 @@ export class PostService {
     }
     this._httpClient
       .put<{ message: string; post: Post }>(
-        `http://localhost:3000/api/posts/${post_id}`,
+        `${Backend_url}/${post_id}`,
         postData
       )
       .subscribe((response) => {
@@ -108,7 +110,7 @@ export class PostService {
 
   deletePost(postId: string) {
     return this._httpClient
-      .delete(`http://localhost:3000/api/posts/${postId}`)
+      .delete(`${Backend_url}/${postId}`)
       // .subscribe(() => {
       //   const updatedPost = this.posts.filter((post) => post.id !== postId);
       //   this.posts = updatedPost;
@@ -123,6 +125,6 @@ export class PostService {
       content: string;
       imagePath: string;
       creator:string
-    }>(`http://localhost:3000/api/posts/${id}`);
+    }>(`${Backend_url}/${id}`);
   }
 }

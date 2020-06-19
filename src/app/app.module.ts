@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {FormsModule} from '@angular/forms';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 
-
+import { AuthModule } from '../app/components/auth/auth.module'
 
 import { MaterialModule } from '../app/material/material.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,9 +13,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PostCreateComponent } from './components/post-create/post-create.component';
 import { PostListComponent } from './components/post-list/post-list.component';
-import { HeaderComponent } from './header/header.component';
-import { LoginComponent } from './components/auth/login/login.component';
-import { SignUpComponent } from './components/auth/sign-up/sign-up.component';
+import { HeaderComponent } from './components/header/header.component';
+
 import { AuthInterceptor } from './components/auth/auth-interceptor';
 import { ErrorComponent } from './components/error/error.component';
 import { ErrorInterceptor } from './error-interceptor';
@@ -28,8 +27,6 @@ import { ErrorInterceptor } from './error-interceptor';
     PostCreateComponent,
     PostListComponent,
     HeaderComponent,
-    LoginComponent,
-    SignUpComponent,
     ErrorComponent,
     
   ],
@@ -40,7 +37,8 @@ import { ErrorInterceptor } from './error-interceptor';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    AuthModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS,useClass: AuthInterceptor,multi:true},
     {provide: HTTP_INTERCEPTORS,useClass: ErrorInterceptor,multi:true}],

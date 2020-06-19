@@ -9,18 +9,18 @@ const mongoose = require('mongoose');
 const app = express();
 const postRoutes = require('./routes/posts');
 const userRoutes = require('./routes/users');
-mongoose.connect("mongodb+srv://anamika:1s1N23MiycqxJwDT@cluster0-tvojz.mongodb.net/mean-stack-app?retryWrites=true&w=majority")
-.then(()=>{
-    console.log("Connected to Db!")
-})
-.catch(()=>{
-    console.log("Connection to Db Failed!")
-});
+mongoose.connect("mongodb+srv://anamika:" + process.env.MONGO_ATLAS_PASSWORD + "@cluster0-tvojz.mongodb.net/mean-stack-app?retryWrites=true&w=majority")
+    .then(() => {
+        console.log("Connected to Db!")
+    })
+    .catch(() => {
+        console.log("Connection to Db Failed!")
+    });
 
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use("/images",express.static(path.join("backend/images")));
+app.use("/images", express.static(path.join("backend/images")));
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -31,6 +31,6 @@ app.use((req, res, next) => {
 
 //1s1N23MiycqxJwDT
 
-app.use("/api/posts",postRoutes);
-app.use("/api/users",userRoutes);
+app.use("/api/posts", postRoutes);
+app.use("/api/users", userRoutes);
 module.exports = app;

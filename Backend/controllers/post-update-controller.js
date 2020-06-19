@@ -19,7 +19,7 @@ exports.updatePost = (req, res) => {
     //creator is added to prevent , the user who doesnot belong to post to do changes.
     Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
     .then(result => {
-        if (result.nModified === 0) {
+        if (result.n === 0) {
             return res.status(401).json({
                 message: "User not authorized",
                 post: null

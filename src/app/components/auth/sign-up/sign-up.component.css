@@ -4,7 +4,7 @@
       margin-top: 90px !important;
       margin: 0 auto;
       max-width: 400px;
-      height: 220px;
+      height: 200px;
       background-color: whitesmoke;
     }
     
@@ -28,4 +28,8 @@
 
     a{
         float: right;
+    }
+
+    button{
+      width: 100%;
     }

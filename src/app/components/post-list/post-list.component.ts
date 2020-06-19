@@ -15,7 +15,7 @@ export class PostListComponent implements OnInit,OnDestroy
   //page related settings
   loggedInUser:string;
   length:number = 0;
-  pageSize:number = 2;
+  pageSize:number = 4;
   pageSizeOptions:number[] = [1,2,5,10];
   currPage:number = 1;
   
