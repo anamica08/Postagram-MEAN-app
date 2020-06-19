@@ -5,7 +5,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Post } from 'src/app/model/post';
 import { Router } from '@angular/router';
 import { mimeType } from './mime-type.validator'
-import { Subscribable, Subscription } from 'rxjs';
+import {  Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -72,7 +72,7 @@ export class PostCreateComponent implements OnInit,OnDestroy {
 }
 
 populateForm(){
-  console.log("populating......")
+  
 this.postForm = this._formBuilder.group({
   title: [this.post.title, Validators.required],
   image:[this.post.imagePath,[Validators.required],[mimeType]],
@@ -94,7 +94,7 @@ this.postForm = this._formBuilder.group({
     
     }
 
-    this._router.navigateByUrl('/');
+   
   }
 
   onImagePicked(event:Event){

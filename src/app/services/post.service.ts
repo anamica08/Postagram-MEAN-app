@@ -4,6 +4,7 @@ import { Post } from '../model/post';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import {environment} from '../../environments/environment'
+import { Router } from '@angular/router';
 
 const Backend_url = environment.apiURL+'/posts/';
 @Injectable({
@@ -12,7 +13,7 @@ const Backend_url = environment.apiURL+'/posts/';
 export class PostService {
   private posts: Post[] = [];
   private postsUpdated = new Subject<{posts:Post[], postCount:number}>();
-  constructor(private _httpClient: HttpClient) {}
+  constructor(private _httpClient: HttpClient,private _router:Router) {}
 
   getPosts(postPerPage:number , currPageNum:number) {
     const querParams = `?size=${postPerPage}&page=${currPageNum}`;
@@ -92,6 +93,7 @@ export class PostService {
         postData
       )
       .subscribe((response) => {
+        this._router.navigateByUrl('/');
         //after we fetch the new data per page . this is not required
         // //locally update the posts array.
         // const updatedPosts = [...this.posts];
