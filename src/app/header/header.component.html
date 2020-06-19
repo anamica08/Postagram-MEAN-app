@@ -1,8 +1,15 @@
 <mat-toolbar color="primary" class="navbar">
-    <div><a routerLink="/" class="title">Post App</a></div>  
+    <div>
+        <span> <img id="icon" src="../../assets/icons8-new-letter-100.png" alt="Post App"></span>
+   
+    </div> 
+    <div>
+        <a routerLink="/" class="title">Postagram</a>
+    </div> 
     <div>
 
         <span  *ngIf="!userAuthenticated"><a mat-button routerLink="/login" routerLinkActive="mat-accent" class="nav-link"  >Login</a></span>
+        <span  *ngIf="!userAuthenticated"><a mat-button routerLink="/signup" routerLinkActive="mat-accent" class="nav-link"  >Signup</a></span>
         <span *ngIf="userAuthenticated"><a mat-button routerLink="/create" routerLinkActive="mat-accent" class="nav-link"  >Create Post</a></span>
         <span *ngIf="userAuthenticated"><a mat-button (click)="onLogout()" class="nav-link"  >Logout  </a></span>
  
