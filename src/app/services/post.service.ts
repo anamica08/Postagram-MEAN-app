@@ -58,6 +58,7 @@ export class PostService {
         postData
       )
       .subscribe((data) => {
+        this._router.navigateByUrl('/');
         //after we fetch the new data per page . this is not required
         // const new_post: Post = {
         //   id: data.post.id,

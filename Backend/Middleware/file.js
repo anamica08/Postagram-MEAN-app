@@ -1,5 +1,5 @@
 const multer = require('multer');
-
+const path = require('path');
 
 
 //multer configurations
@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
             error = null;
         }
         //please note path is relative to server.js
-        cb(error, "backend/images");
+        cb(error, path.resolve(__dirname, "../images"));
     },
     filename: (req, file, cb) => {
         const name = file.originalname.toLowerCase().split('').join('-');
