@@ -12,15 +12,8 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `ng build --prod` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
 ## Further help
 
@@ -28,6 +21,21 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 
 ## Connection to DB
-used mongodb atlas clusters.
+mongodb atlas clusters.
+
+## Description
+
+This application enables user to signup and login to create a post of his choice. User will upload a image ,tile and content to create a post, which clearly states that 
+mongoose is used to create the schema of post. User has to stay logged in to edit or delete, only the posts created by him.
+
+## Deployed resources 
+Following the rest architecture: 
+Backend is deployed on https://postagram-app-mean.herokuapp.com/api/posts (No extra storage has been allocated for image files/static files. App may loose images after some time).
+Frontend is deployed on aws http://postagram.s3-website-us-east-1.amazonaws.com
+
+
+
+visit : http://postagram.s3-website-us-east-1.amazonaws.com
+
 
 
