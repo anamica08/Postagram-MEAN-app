@@ -25,8 +25,9 @@ mongodb atlas clusters.
 
 ## Description
 
-This application enables user to signup and login to create a post of his choice. User will upload a image ,tile and content to create a post, which clearly states that 
-mongoose is used to create the schema of post. User has to stay logged in to edit or delete, only the posts created by him.
+This application enables user to signup and login to create a post of his choice. 
+User will upload a image ,title and content to create a post, which clearly states that mongoose is used to create the schema of post.
+User has to stay logged in to edit or delete, only the posts created by him.
 
 ## Deployed resources 
 Following the rest architecture: 
